@@ -1,0 +1,77 @@
+<div class="container d-flex justify-content-center">
+  <div class="main-header" *ngIf="!message"><h2 class="headingmain" *ngIf="!isAdminUser">Complete your Reservation</h2>
+    <div class="car-reservation">
+      <div class="card m-3" style="width: 600px; height: 300px">
+        <img class="card-img-top" src="{{car.imageUrl}}" alt="a picture of a car">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card d-flex mx-auto">
+          <div class="card-body">
+            <h3 class="card-subtitle mb-1" *ngIf="reservation.id">Reservation number:</h3>
+            <p class="mb-1" *ngIf="reservation.id">{{reservation.id}}</p>
+            <h3 class="card-subtitle mb-1">Customer:</h3>
+            <p class="mb-1">{{user?.firstName}} {{user?.lastName}}</p>
+            <h3 class="card-subtitle mb-1">Total cost:</h3>
+            <p class="mb-1">&#36;{{car.price}}/ per day</p>
+            <h3 class="card-subtitle mb-1">Pick-up:</h3>
+            <small class="text-muted">{{reservation.fromDate}}</small>
+            <p class="mb-1">{{reservation?.address?.street}}<ng-container *ngIf="reservation?.address?.city">, {{reservation?.address?.city}}</ng-container>
+              <ng-container *ngIf="reservation?.address?.country">, {{reservation?.address?.country}}</ng-container></p>
+            <h3 class="card-subtitle mb-1">Return:</h3>
+            <small class="text-muted">{{reservation.toDate}}</small>
+            <p class="mb-1">{{reservation.address.street}}<ng-container *ngIf="reservation.address.city">, {{reservation.address.city}}</ng-container>
+              <ng-container *ngIf="reservation.address.country">, {{reservation.address.country}}</ng-container></p>
+            <p class="card-text text-muted my-2"><b>Milage option</b><br>100km per day</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card d-flex mx-auto">
+          <div class="card-body">
+            <div class="mt-1 d-flex justify-content-between align-items-center">
+              <div class="small-ratings">
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star rating-color"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="ratings-count">(125)</i>
+              </div>
+            </div>
+
+            <h1 class="card-title">{{car.name}}</h1>
+
+            <div class="mt-1 d-flex justify-content-between align-items-center">
+              <div class="mt-1 d-flex justify-content-start align-items-center">
+                <img src="assets/images/people.png">
+                <p class="m-2">{{car?.passengerCount}} {{car.passengerCount === '1' ? 'person' : 'people'}}</p>
+              </div>
+              <div class="mt-1 d-flex justify-content-start align-items-center">
+                <img class="wheel-icon" src="assets/images/wheel.png">
+                <p class="m-1 ml-1">{{car?.transmissionType}}</p>
+              </div>
+            </div>
+            <div class="mt-1 d-flex justify-content-between align-items-center">
+              <div class="mt-1 d-flex justify-content-start align-items-center">
+                <img src="assets/images/gauge.png">
+                <p class="m-1">7.5km/litre</p>
+              </div>
+              <div class="mt-1 d-flex justify-content-start align-items-center">
+                <img class="gas-icon mr-1" src="assets/images/gas.png">
+                <p class="m-1">{{car.fuelType}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 pl-0" *ngIf="!isAdminUser"><a class="btn btn-dark btn-block" (click)="submit()">Submit</a></div>
+      <div class="col-sm-12 pl-0" *ngIf="isAdminUser"><a class="btn btn-danger btn-block" (click)="delete(reservation)">Cancel reservation</a></div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!!message" class="alert d-flex justify-content-center alert-success">
+  {{message}}
+</div>

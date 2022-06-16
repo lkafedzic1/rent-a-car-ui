@@ -1,0 +1,62 @@
+<app-navigation></app-navigation>
+<div class="dashboard d-flex align-items-center">
+  <img src="./assets/images/dashboard.png" alt="how to image">
+</div>
+<div class="how-it-work d-flex align-items-center">
+  <img src="./assets/images/explain.PNG" alt="how to image">
+</div>
+<div class="container">
+  <div class="card">
+    <div class="card-body mt-1 d-flex align-items-center">
+      <div class="pickup-point">
+        <h3>Where to Pick up?</h3>
+        <div class="row">
+          <div class="col-md-12">
+            <form autocomplete="off" [formGroup]="searchForm">
+              <input type="search" id="address" formControlName="address" class="form-control" placeholder="address (Street, City, Country)?"/>
+              <div *ngIf="searchForm.get('address')?.touched && searchForm.get('address')?.invalid" class="alert alert-danger">
+                <div *ngIf="searchForm.get('address')?.errors?.required">Address is required.</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="dates">
+        <form autocomplete="off" [formGroup]="searchForm" class="dates">
+          <mat-form-field appearance="fill">
+            <h3>Pick-up date?</h3>
+            <input class="date-picker" formControlName="from" matInput [matDatepicker]="picker" (focus)="picker.open()">
+            <div *ngIf="searchForm.get('from')?.touched && searchForm.get('from')?.invalid" class="alert alert-danger">
+              <div *ngIf="searchForm.get('from')?.errors?.required">Pick-up date is required.</div>
+            </div>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <h3>Return date?</h3>
+            <input class="date-picker" formControlName="to" matInput [matDatepicker]="picker2" (focus)="picker2.open()">
+            <div *ngIf="searchForm.get('to')?.touched && searchForm.get('to')?.invalid" class="alert alert-danger">
+              <div *ngIf="searchForm.get('to')?.errors?.required">Return date is required.</div>
+            </div>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div class="col-sm-3 col-12 submit">
+        <button type="submit" class="btn btn-black" (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!!message" class="alert d-flex justify-content-center alert-danger">
+  {{message}}
+</div>
+<div class="cars" *ngIf="!!cars && cars.length > 0">
+  <div class="car" *ngFor="let car of cars">
+    <app-car-card [car]="car" (rentNowEvent)="rentNow($event)"></app-car-card>
+  </div>
+</div>
+<div *ngIf="!cars" class="alert d-flex justify-content-center alert-danger">
+  Error while retrieving cars
+</div>
+<app-footer></app-footer>

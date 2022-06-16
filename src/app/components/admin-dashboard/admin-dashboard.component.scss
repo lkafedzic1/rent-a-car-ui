@@ -1,0 +1,16 @@
+.cars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.car {
+  flex: 0 0 450px;
+  //border: 1px solid red;
+  //margin: 0 !important;
+
+}
+
+::ng-deep .mat-tab-label {
+  color: black !important;
+}

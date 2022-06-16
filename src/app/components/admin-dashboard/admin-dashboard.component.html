@@ -1,0 +1,72 @@
+<app-navigation></app-navigation>
+<div class="container d-flex justify-content-center">
+  <h1>
+    Admin Dashboard
+  </h1>
+</div>
+<div class="container d-flex justify-content-center">
+  <mat-tab-group [selectedIndex]="selected.value" (selectedTabChange)="selectedTab($event)">
+
+    <mat-tab label="View cars">
+
+      <div class="cars" *ngIf="!!cars && cars.length > 0">
+        <div class="car" *ngFor="let car of cars">
+          <app-car-card [car]="car" (deleteEvent)="deleteCar($event)"></app-car-card>
+        </div>
+      </div>
+      <div *ngIf="!cars" class="alert d-flex justify-content-center alert-danger">
+        Error while retrieving cars
+      </div>
+    </mat-tab>
+
+    <mat-tab label="View reservations">
+      <ng-container *ngFor="let reservation of reservations">
+        <app-reservation [reservation]="reservation" (deleteEvent)="deleteReservation($event)"></app-reservation>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="View users"> Content 3</mat-tab>
+    <mat-tab label="Add new car">
+
+      <div class="col-sm-8 text-center container d-flex justify-content-center">
+        <form [formGroup]="addNewCar">
+
+          <p class="h4 mb-4 text-center signintext top"><strong>Add a new car to rental service</strong></p>
+          <input class="form-control mb-4" type="text" formControlName="name" placeholder="car name"/>
+          <div *ngIf="addNewCar.get('name')?.touched && addNewCar.get('name')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('name')?.errors?.required">Car name is required.</div>
+          </div>
+          <input class="form-control mb-4" type="text" formControlName="passengerCount" placeholder="passenger number"/>
+          <div *ngIf="addNewCar.get('passengerCount')?.touched && addNewCar.get('passengerCount')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('passengerCount')?.errors?.required">passengers required.</div>
+          </div>
+          <input class="form-control mb-4" type="text" formControlName="fuelType" placeholder="Fuel type (Diesel, petrol or electric) "/>
+          <div *ngIf="addNewCar.get('fuelType')?.touched && addNewCar.get('fuelType')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('fuelType')?.errors?.required">Fuel type (Diesel, petrol or electric) required.</div>
+          </div>
+          <input class="form-control mb-4" type="text" formControlName="price" placeholder="price per day"/>
+          <div *ngIf="addNewCar.get('price')?.touched && addNewCar.get('price')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('price')?.errors?.required">price per day is required.</div>
+          </div>
+          <input class="form-control mb-4" type="text" formControlName="transmissionType" placeholder="transmission type (Manual or Automatic)"/>
+          <div *ngIf="addNewCar.get('transmissionType')?.touched && addNewCar.get('transmissionType')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('transmissionType')?.errors?.required">transmission type required.</div>
+          </div>
+          <input class="form-control mb-4" type="text" formControlName="imageUrl" placeholder="image url"/>
+          <div *ngIf="addNewCar.get('imageUrl')?.touched && addNewCar.get('imageUrl')?.invalid" class="alert alert-danger">
+            <div *ngIf="addNewCar.get('imageUrl')?.errors?.required">image url required.</div>
+          </div>
+          <button class="btn btn-info btn-block LoginBtn" [disabled]="addNewCar.invalid" (click)="submit()">ADD NEW CAR</button>
+        </form>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div *ngIf="cars?.length == 0 && selectedTabIndex === 0" class="alert d-flex justify-content-center alert-warning mt-5">
+  {{warningMessage}}
+</div>
+<div *ngIf="!!errorMessage" class="alert d-flex justify-content-center alert-danger">
+  {{errorMessage | json}}
+</div>
+<div *ngIf="!!message" class="alert d-flex justify-content-center alert-success">
+  {{message}}
+</div>

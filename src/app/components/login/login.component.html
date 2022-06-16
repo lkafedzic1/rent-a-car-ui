@@ -1,0 +1,70 @@
+<!--For all screen-->
+<div class="page">
+  <!--Login & Signup in single row-->
+  <div class="row">
+    <!--Column for signin-->
+    <div class="col-sm-8 text-center signin">
+      <!-- Default form login -->
+      <form *ngIf="!newAccount" [formGroup]="signInForm">
+        <p class="h4 mb-4 text-center signintext top"><strong>Sign in to Rent a Car</strong></p>
+
+        <!--Login with Social Media Buttons-->
+        <div class="social-btn text-center">
+          <a href="/login" class="btn btn-primary btn-lg" title="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="/login" class="btn btn-info btn-lg" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="/login" class="btn btn-danger btn-lg" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+        </div>
+
+        <p class="text-center signintext">Or use your Email account</p>
+
+        <!-- Email -->
+        <input type="email" id="email" formControlName="email" class="form-control mb-4" placeholder="&#xf0e0; Email" style="font-family:Arial, FontAwesome">
+        <div class="error alert-danger" *ngIf="email.dirty && email.hasError('required')">Please provide email</div>
+
+        <!-- Password -->
+        <input type="password" formControlName="password" class="form-control mb-4" placeholder="&#xf023;  Password" style="font-family:Arial, FontAwesome">
+        <div class="error alert-danger" *ngIf="password.dirty && password.hasError('required')">Please provide password</div>
+        <!-- Sign in button -->
+        <a class="ForgotPassBtn" (click)="switchContext()">No Account? Sign up.</a>
+        <button class="btn btn-info btn-block LoginBtn" type="submit" [disabled]="!email.value && !password.value" (click)="login()">SIGN IN</button>
+        <div class="error alert-danger" *ngIf="message" style="text-align: center; padding: 16px;">{{message}}</div>
+      </form>
+      <!--      <div class="form">-->
+      <form *ngIf="newAccount" class="lead-form" [formGroup]="signUpForm">
+
+        <p class="h4 mb-4 text-center signintext top"><strong>Sign up to Rent a Car</strong></p>
+        <input class="form-control mb-4" type="text" formControlName="firstName" placeholder="name"/>
+        <div *ngIf="signUpForm.get('firstName')?.touched && signUpForm.get('name')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('firstName')?.errors?.required">Name is required.</div>
+        </div>
+        <input class="form-control mb-4" type="text" formControlName="lastName" placeholder="surname"/>
+        <div *ngIf="signUpForm.get('lastName')?.touched && signUpForm.get('lastName')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('lastName')?.errors?.required">Surname is required.</div>
+        </div>
+        <input class="form-control mb-4" type="text" formControlName="phone" placeholder="phone"/>
+        <div *ngIf="signUpForm.get('phone')?.touched && signUpForm.get('phone')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('phone')?.errors?.required">Phone number is required.</div>
+        </div>
+        <input class="form-control mb-4" type="text" formControlName="address" placeholder="Address (Street, City, Country)"/>
+        <div *ngIf="signUpForm.get('address')?.touched && signUpForm.get('address')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('address')?.errors?.required">Address number is required.</div>
+        </div>
+        <input class="form-control mb-4" type="email" formControlName="email" placeholder="email"/>
+        <div *ngIf="signUpForm.get('email')?.touched && signUpForm.get('email')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('email')?.errors?.required">Email is required.</div>
+          <div *ngIf="signUpForm.get('email')?.errors?.email">Please, enter valid email address.</div>
+        </div>
+        <input class="form-control mb-4" class="form-control mb-4" type="password" formControlName="password" placeholder="password"/>
+        <div *ngIf="signUpForm.get('password')?.touched && signUpForm.get('password')?.invalid" class="alert alert-danger">
+          <div *ngIf="signUpForm.get('password')?.errors?.required">password number is required.</div>
+        </div>
+        <a class="ForgotPassBtn" href="/login" (click)="switchContext()">Already have an account?</a>
+        <button class="btn btn-info btn-block LoginBtn" [disabled]="signUpForm.invalid" (click)="submit()">REGISTER ACCOUNT</button>
+      </form>
+    </div>
+
+    <!--Column for signin-->
+    <div class="col-sm-4 signup text-center">
+    </div>
+  </div>
+</div>
